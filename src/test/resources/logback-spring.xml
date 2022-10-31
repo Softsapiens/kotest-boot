@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true">
+
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <omitEmptyFields>true</omitEmptyFields>
+                    <pattern>
+                        {
+                        "@timestamp": "%date{yyyy-MM-dd'T'HH:mm:ss.SSSXXX, UTC}",
+                        "error": {
+                        "stack_trace": "%exception"
+                        },
+                        "log": {
+                        "level": "%level",
+                        "logger": "%logger",
+                        "origin": {
+                        "file": {
+                        "line": "%line",
+                        "name": "%file"
+                        },
+                        "function": "%method"
+                        }
+                        },
+                        "message": "%message",
+                        "process": {
+                        "thread": {
+                        "name": "%thread"
+                        }
+                        },
+                        "span": {
+                        "id": "%X{span_id}"
+                        },
+                        "trace": {
+                        "id": "%X{trace_id}"
+                        }
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
