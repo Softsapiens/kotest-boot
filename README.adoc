@@ -1,0 +1,8 @@
+= kotest-boot
+
+An opinionated idiomatic testing boot project in Kotlin using link:https://kotest.io/[kotest] framework.
+
+Some explored features are:
+
+* Spring (Boot) framework integration.
+* Log Capture.
