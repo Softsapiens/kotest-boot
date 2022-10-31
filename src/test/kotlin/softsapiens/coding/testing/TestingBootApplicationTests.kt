@@ -31,14 +31,20 @@ class MyTestSpec : FunSpec() {
 }
 
 @ContextConfiguration(classes = [(UserService::class)])
-class SpringAutowiredConstructorTest(service: UserService) : WordSpec() {
+class SpringAutowiredConstructorTest(service: UserService) : WordSpec({
+}) {
+
+	val logCaptureListener = LogCaptureListener()
 
 	override fun extensions() = listOf(SpringExtension)
 
 	init {
+		listener(logCaptureListener)  // Add LogCaptureListener
+
 		"SpringExtension" should {
 			"have autowired the service" {
 				service.createUser() shouldBe User(1, "John")
+				logCaptureListener.logged(aLog().info().withMessage("user created"))
 			}
 		}
 	}
